@@ -1,56 +1,84 @@
 <body>
-<p>This is the partial for search</p>
 
-<div id="header">
-    <img src="https://pbs.twimg.com/profile_images/634474652967006208/46qwP9AX.png" style="width:50px;heigth:70px"/>
-</div>
 
-<form>
-    <div id="body">
-        <br>
-        <input type="text" name="searchValue" ng-model="searchValue"/>
-        <input type="submit" name="submit" ng-click="search()"/></br>
-        <br>
-        <input type="radio" name="searchType" value="track" ng-model="searchType"/> song
-        <input type="radio" name="searchType" value="artist" ng-model="searchType"/> artist
-        <input type="radio" name="searchType" value="album" ng-model="searchType"/> album
-        <input type="radio" name="searchType" value="playlist" ng-model="searchType"/> playlist   </br>
-        <hr/>
-    </div>
+<header style="position:fixed">
+    <img src="http://www.wired.com/wp-content/uploads/2015/08/zfHNFDb5.jpg" style="width:127px;heigth:90px"/>
+    Spot(ify) lite
+</header>
+
+<article>
+    <br>
+    <input type="text" name="searchValue" ng-model="searchValue"/>
+    <input type="submit" name="submit" ng-click="search()"/></br>
+    <br>
+    <input type="radio" name="searchType" value="track" ng-model="searchType"/> song
+    <input type="radio" name="searchType" value="artist" ng-model="searchType"/> artist
+    <input type="radio" name="searchType" value="album" ng-model="searchType"/> album
+    <input type="radio" name="searchType" value="playlist" ng-model="searchType"/> playlist   </br>
+    <div ng-if="searchResults != undefined"><a><hr/></a></div>
+</article>
+
+<section>
 
 
     <div class="result" ng-if="searchType == 'artist'">
         <div id="artistResults" class="isotope"  ng-repeat="searchResult in searchResults">
             <div ng-if="searchResult.images.length > 0"><a ng-href="index.html#/artistDetails/{{searchResult.id}}">
                 <img ng-src="{{searchResult.images[0].url;}}" style="width:300px;heigth:200px;"></a>
-                <span class="title">{{searchResult.name}}</span>
+                <span class="title">{{searchResult.name}}</span><p/>
             </div>
         </div>
     </div>
 
-    <div class="result" ng-if="searchType == 'song'">
-        <div id="songResults" class="isotope"  ng-repeat="searchResult in searchResults">
-            <div ng-if="searchResult.images.length > 0"><a ng-href="index.html#/songDetails/{{searchResult.id}}">
+    <div class="result" ng-if="searchType == 'track'">
+        <div id="trackResults" class="isotope" ng-repeat="searchResult in searchResults">
+            <a ng-href="index.html#/albumDetails/{{searchResult.album.id}}">
+                <img ng-src="{{searchResult.album.images.length > 0 ? searchResult.album.images[0].url : 'imagenotfound.png';}}" style="width:300px;heigth:200px;" ></a>
+            <span><a href="{{searchResult.preview_url}}"><img ng-src="images/playButtonSmall.png"></a></span>
+            <span>{{searchResult.name}} - <a ng-href="index.html#/artistDetails/{{searchResult.artists[0].id}}">{{searchResult.artists[0].name}}</a> - {{searchResult.album.name}}</span>
+            <p/>
+        </div>
+    </div>
+
+    <div class="result" ng-if="searchType == 'album'">
+        <div id="albumResults" class="isotope"  ng-repeat="searchResult in searchResults">
+            <div ng-if="searchResult.images.length > 0"><a ng-href="index.html#/albumDetails/{{searchResult.id}}">
                 <img ng-src="{{searchResult.images[0].url;}}" style="width:300px;heigth:200px;"></a>
-                <span class="title">{{searchResult.name}}</span>
+                <span class="title">{{searchResult.name}}</span><p/>
+            </div>
+        </div>
+    </div>
+
+    <div class="result" ng-if="searchType == 'playlist'">
+        <div id="playlistResults" class="isotope"  ng-repeat="searchResult in searchResults">
+            <div ng-if="searchResult.images.length > 0"><a ng-href="index.html#/playlistDetails/{{searchResult.id}}">
+                <img ng-src="{{searchResult.images[0].url;}}" style="width:300px;heigth:200px;"></a>
+                <span class="title">{{searchResult.name}}</span><p/>
             </div>
         </div>
     </div>
 
 
-</form>
+</section>
 
 </body>
 
 <style>
-    #header {
-        backround-color:black;
+    header {
+        background-color:black;
         color:white;
         text-align:left;
+
         padding:4px;
 
     }
-    #body {
+    article {
+
         text-align:center;
     }
+    section {
+        text-align: left;
+        overflow-y: scroll;
+    }
+
 </style>
