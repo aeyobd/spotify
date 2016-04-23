@@ -1,12 +1,13 @@
 <body>
 
-
-<header style="position:fixed">
+<div style="position:fixed;left:0;right:0; ">
+<header >
     <img src="http://www.wired.com/wp-content/uploads/2015/08/zfHNFDb5.jpg" style="width:127px;heigth:90px"/>
     Spot(ify) lite
-</header>
+</header></div>
 
-<article>
+<article style="position:fixed;top:72px;left:0;right:0;">
+
     <br>
     <input type="text" name="searchValue" ng-model="searchValue"/>
     <input type="submit" name="submit" ng-click="search()"/></br>
@@ -19,7 +20,6 @@
 </article>
 
 <section>
-
 
     <div class="result" ng-if="searchType == 'artist'">
         <div id="artistResults" class="isotope"  ng-repeat="searchResult in searchResults">
@@ -75,10 +75,14 @@
     article {
 
         text-align:center;
+        background-color: white;
     }
     section {
         text-align: left;
-        overflow-y: scroll;
+        position:absolute;
+        top:196px;
+        overflow
+
     }
 
 </style>
